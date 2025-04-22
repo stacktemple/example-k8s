@@ -10,19 +10,34 @@ services:
     volumes:
       - sect_pgdata:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - "5432:5432"
+    # No exposed port → accessible only within Docker network
+    # ports:
+    #   - "5432:5432"
+    restart: unless-stopped
 
   sect_server:
-    image: thitiphum12/sect-server
+    image: thitiphum12/sect-server:latest
     environment:
       - PORT=7777
       - DB_ON_FLAG=1
       - DB_URL=postgresql://sectuser:sectpass@sect_database:5432/sectdb
-    ports:
-      - 4000:7777
+    # Internal-only backend service
+    # ports:
+    #   - 4000:7777
     depends_on:
       - sect_database
+    restart: unless-stopped
+
+  sect_client:
+    image: thitiphum12/sect-client:latest
+    environment:
+      - VITE_BASE_URL=sect_server:7777
+    ports:
+      # Exposes frontend on localhost:3000
+      - 3000:80
+    depends_on:
+      - sect_server
+    restart: unless-stopped
 
 volumes:
   sect_pgdata:
