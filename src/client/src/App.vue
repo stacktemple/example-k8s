@@ -3,7 +3,10 @@ import HealthCard from "./components/HealthCard.vue";
 import SectsList from "./components/SectsList.vue";
 import { ref, onMounted } from "vue";
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl =
+  typeof window !== "undefined" && window.env?.VITE_BASE_URL
+    ? window.env.VITE_BASE_URL
+    : import.meta.env.VITE_BASE_URL;
 
 const health = ref(null);
 const healthLoading = ref(true);

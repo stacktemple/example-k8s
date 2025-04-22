@@ -18,12 +18,12 @@ services:
   sect_server:
     image: thitiphum12/sect-server:latest
     environment:
-      - PORT=7777
+      - PORT=3000
       - DB_ON_FLAG=1
       - DB_URL=postgresql://sectuser:sectpass@sect_database:5432/sectdb
     # Internal-only backend service
-    # ports:
-    #   - 4000:7777
+    ports:
+      - 4000:3000
     depends_on:
       - sect_database
     restart: unless-stopped
@@ -36,6 +36,11 @@ services:
     depends_on:
       - sect_server
     restart: unless-stopped
+    # Mount env.js into the built frontend app for runtime configuration
+    # This enables dynamic environment variables without rebuilding the image
+    # (Prepares for Kubernetes ConfigMap-based injection)
+    volumes:
+      - ./envs/client-env.js:/usr/share/nginx/html/env.js
 
 volumes:
   sect_pgdata:
