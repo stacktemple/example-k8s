@@ -4,7 +4,7 @@ CREATE table IF NOT EXISTS sects (
     power INTEGER CHECK (power >= 0 AND power <= 100)
 );
 
-INSERT INTO dojos (name, power) VALUES
+INSERT INTO sects (name, power) VALUES
     ('Azure Dragon Sect', 95),
     ('Phoenix Gate Academy', 88),
     ('Shadow Moon Clan', 92),
