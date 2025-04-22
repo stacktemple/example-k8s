@@ -30,8 +30,6 @@ services:
 
   sect_client:
     image: thitiphum12/sect-client:latest
-    environment:
-      - VITE_BASE_URL=sect_server:7777
     ports:
       # Exposes frontend on localhost:3000
       - 3000:80
