@@ -1,9 +1,9 @@
-version: '3.8'
+version: "3.8"
 
 services:
   sect_database:
     image: postgres:15-alpine
-    environment: 
+    environment:
       POSTGRES_DB: sectdb
       POSTGRES_USER: sectuser
       POSTGRES_PASSWORD: sectpass
@@ -11,7 +11,18 @@ services:
       - sect_pgdata:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - '5432:5432'
+      - "5432:5432"
+
+  sect_server:
+    image: thitiphum12/sect-server
+    environment:
+      - PORT=7777
+      - DB_ON_FLAG=1
+      - DB_URL=postgresql://sectuser:sectpass@sect_database:5432/sectdb
+    ports:
+      - 4000:7777
+    depends_on:
+      - sect_database
 
 volumes:
   sect_pgdata:
