@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sect-database
+  namespace: example-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sect-database
+  template:
+    metadata:
+      labels:
+        app: sect-database
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          envFrom:
+            - configMapRef:
+                name: sect-db-config
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+            - name: init-sql
+              mountPath: /docker-entrypoint-initdb.d/init.sql
+              subPath: init.sql
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: sect-db-pvc
+        - name: init-sql
+          configMap:
+            name: sect-db-init

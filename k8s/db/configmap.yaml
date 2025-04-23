@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sect-db-config
+  namespace: example-k8s
+data:
+  POSTGRES_DB: sectdb
+  POSTGRES_USER: sectuser
+  POSTGRES_PASSWORD: sectpass
