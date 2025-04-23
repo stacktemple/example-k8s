@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sect-client-env
+  namespace: example-k8s
+data:
+  env.js: |
+    window.env = {
+      VITE_BASE_URL: "http://103.132.3.14:30001",
+    };
