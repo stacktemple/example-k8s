@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sect-server
+  namespace: example-k8s
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sect-server
+  template:
+    metadata:
+      labels:
+        app: sect-server
+    spec:
+      containers:
+        - name: sect-server
+          image: thitiphum12/sect-server:latest
+          envFrom:
+            - configMapRef:
+                name: sect-server-config

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sect-server-config
+  namespace: example-k8s
+data:
+  PORT: "3000"
+  DB_ON_FLAG: "1"
+  DB_URL: postgresql://sectuser:sectpass@sect-database:5432/sectdb

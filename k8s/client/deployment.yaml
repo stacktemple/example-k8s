@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sect-client
+  namespace: example-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sect-client
+  template:
+    metadata:
+      labels:
+        app: sect-client
+    spec:
+      containers:
+        - name: sect-client
+          image: thitiphum12/sect-client:latest
+          volumeMounts:
+            - name: inject-env
+              mountPath: /usr/share/nginx/html/env.js
+              subPath: env.js
+      volumes:
+        - name: inject-env
+          configMap:
+            name: sect-client-env
