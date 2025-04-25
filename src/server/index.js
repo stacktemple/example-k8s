@@ -38,6 +38,9 @@ app.use(cors());
 app.use(morgan("combined"));
 app.use(express.json());
 
+// Sub-router
+const apiRouter = express.Router();
+
 // Ping DB
 async function pingDB() {
   if (!pool) {
@@ -67,7 +70,7 @@ if (DB_ON_FLAG === "1") {
 }
 
 // Routes
-app.get("/health", (_, res) => {
+apiRouter.get("/health", (_, res) => {
   const thaiTime = new Date().toLocaleString("en-US", {
     timeZone: "Asia/Bangkok",
     dateStyle: "full",
@@ -86,7 +89,7 @@ app.get("/health", (_, res) => {
   });
 });
 
-app.get("/sects", async (_, res) => {
+apiRouter.get("/sects", async (_, res) => {
   if (DB_ON_FLAG === "0") {
     return res.status(200).json({
       status: "ok",
@@ -129,6 +132,9 @@ process.on("SIGINT", async () => {
   }
   process.exit(0);
 });
+
+// Mount /api
+app.use("/api", apiRouter);
 
 // Start
 app.listen(PORT, () => {
