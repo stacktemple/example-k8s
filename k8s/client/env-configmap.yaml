@@ -6,5 +6,5 @@ metadata:
 data:
   env.js: |
     window.env = {
-      VITE_BASE_URL: "https://example-k8s.stacktemple.com/api",
+      VITE_BASE_URL: "example.com/api",
     };

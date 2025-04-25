@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: example-k8s.stacktemple.com
+    - host: example.com
       http:
         paths:
           - path: /
@@ -26,6 +26,6 @@ spec:
                 name: sect-server
                 port:
                   number: 3001
-  tls:
-    - hosts:
-        - example-k8s.stacktemple.com
+  # tls:
+  #   - hosts:
+  #       - example.com
