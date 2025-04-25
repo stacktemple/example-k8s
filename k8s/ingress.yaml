@@ -4,7 +4,7 @@ metadata:
   name: example-k8s-ingress
   namespace: example-k8s
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    # traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls.certresolver: default
 spec:
   ingressClassName: traefik
